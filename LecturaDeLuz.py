@@ -11,13 +11,15 @@ lightSensor = machine.ADC(26)
 lightSensorLecture = lightSensor.read_u16()
 
 lightRange = {
-    'green': '7000',
-    'yellow': '10000',
-    'red': '65535'
+    'green': 16375,
+    'yellow': 32750,
+    'red': 65535
 }
 
 while True:
     greenLed.value(1)
+    yellowLed.value(0)
+    redLed.value(0)
     if buttonOne.value()==1:
         greenLed.value(0)
         yellowLed.value(0)
@@ -25,12 +27,18 @@ while True:
         print("Iniciando medición de luz")
         while True:
 
-            if lightSensorLecture < lightRange.get('green'):
+            if lightSensor.read_u16() < lightRange.get('green'):
                 greenLed.value(1)
-            elif lightSensorLecture >= lightRange.get('green') and lightSensorLecture < lightRange.get('yellow'):
+                yellowLed.value(0)
+                redLed.value(0)
+            elif lightSensor.read_u16() >= lightRange.get('green') and lightSensor.read_u16() < lightRange.get('yellow'):
+                greenLed.value(0)
                 yellowLed.value(1)
+                redLed.value(0)
             else:
+                greenLed.value(0)
+                yellowLed.value(0)
                 redLed.value(1)
 
-            print(lightSensorLecture)
+            print(lightSensor.read_u16())
             utime.sleep(1)
