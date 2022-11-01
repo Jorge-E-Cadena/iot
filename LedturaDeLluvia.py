@@ -7,7 +7,7 @@ greenLed = machine.Pin(2, machine.Pin.OUT)
 yellowLed = machine.Pin(3, machine.Pin.OUT)
 redLed = machine.Pin(4, machine.Pin.OUT)
 
-lightSensor = machine.ADC(26)
+waterSensor = machine.ADC(32)
 
 lightRange = {
     'green': 16375,
